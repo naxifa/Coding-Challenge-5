@@ -12,53 +12,83 @@ const inventory =  [
 console.log(inventory);
 
 
+
 // Task 2- Creating an Orders Array of Order Objects
 
-const orders = []; // Empty orders array
+const orders = []; 
 console.log(orders);
 
-// Function to place an order using a traditional for loop with an index
+
+
+// Task 3 - Creating a Function to Place an Order
+
+// Function to place an order using a loop with an index
 function placeOrder(customerName, orderedItems) {
-    // Check if all products are in stock
+let processedItems = [];
+
+    // Checking if ordered products are in stock
     for (let i = 0; i < orderedItems.length; i++) {
-      const orderedProduct = orderedItems[i];
-      const product = inventory.find(item => item.name === orderedProduct.name);
-      
+      let orderedProduct = orderedItems[i];
+      let product = inventory.find(item => item.name === orderedProduct.name);
+
       if (!product) {
-        console.error(`${orderedProduct.name} does not exist in the inventory.`);
-        return; // Stop processing if a product doesn't exist
+        console.log(`Order placed for "${orderedProduct.name}" does not exist`);
       }
       
-      if (product.quantity < orderedProduct.quantity) {
-        console.error(`Insufficient stock for ${orderedProduct.name}. Remaining stock: ${product.quantity}`);
-        return; // Stop processing if stock is insufficient
+      else if (orderedProduct.quantity > product.quantity) {
+        console.log(`Insufficient stock for ${orderedProduct.name}`);
       }
-    }
-  
-    // Update inventory quantities
-    for (let i = 0; i < orderedItems.length; i++) {
-      const orderedProduct = orderedItems[i];
-      const product = inventory.find(item => item.name === orderedProduct.name);
-      product.quantity -= orderedProduct.quantity; // Deduct ordered quantity from inventory
-    }
-  
-    // Add the new order to the orders array with status 'Pending'
+
+      else {
+        product.quantity -= orderedProduct.quantity; 
+
+        processedItems.push(orderedProduct);
+    }}
+
+    if (processedItems.length > 0) {
+
+    // Adding the new order to the orders array with status 'Pending'
     let newOrder = {
       customerName: customerName,
-      items: orderedItems,
-      status: 'Pending'
+      items: processedItems,
+      status: "Pending"
     };
-  
+
+    // Pushing valid orders into the system
     orders.push(newOrder);
-    console.log(`Order placed successfully for ${customerName}.`);
+    console.log(`Order placed for ${customerName}`);
   }
-  
-  // Example function call to place an order
-  const orderedItems = [
-    { name: 'Espresso', quantity: 2 },
-    { name: 'Latte', quantity: 1 }
+  else {
+    console.log(`No orders processed for ${customerName}`)
+  }}
+// Calling function to place an order
+const orderedItems = [
+    {name: "Espresso", quantity: 5},
+    {name: "Mocha", quantity: 46},
+    {name: "Latt", quantity: 1}
   ];
-  placeOrder('Rafael', orderedItems);  // Passing 'Rafael' as the customerName
-  
+  placeOrder('Rafael', orderedItems);  // Customer ordering
+
+
+
+// Task 4 - Create a Function to Calculate Total for an Order
+ 
+function calculateOrderTotal (order) {
+let total = 0 // Assuming initial total to be 0
+
+   order.items.forEach(orderedProduct => {
+    let product = inventory.find(item => item.name === orderedProduct.name);
+
+    if (product) {
+      total += orderedProduct.quantity * product.price;
+    }
+  });
+  return total;  // Return the total price of the order
+}
+
+// Example: Calculate the total for Rafael's order
+let total = calculateOrderTotal(orders[0]);
+   console.log(`Total for Rafael's order: $${total}`);
+
 
 
