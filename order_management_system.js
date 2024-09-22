@@ -114,9 +114,9 @@ let checkPendingOrders = function () {
     let pendingOrders = orders.filter(order => order.status === "Pending");
 
 if (pendingOrders.length > 0) {
-    console.log(`There are ${pendingOrders.length} pending order(s).`);
+    console.log(`There are ${pendingOrders.length} pending order(s)`);
 } else {
-    console.log("All orders have been completed.");
+    console.log("All orders have been completed");
 }
 }
 // Calling the function to check for pending orders
