@@ -15,7 +15,7 @@ console.log(inventory);
 
 // Task 2- Creating an Orders Array of Order Objects
 
-const orders = []; 
+let orders = []; 
 console.log(orders);
 
 
@@ -34,11 +34,9 @@ let processedItems = [];
       if (!product) {
         console.log(`Order placed for "${orderedProduct.name}" does not exist`);
       }
-      
       else if (orderedProduct.quantity > product.quantity) {
-        console.log(`Insufficient stock for ${orderedProduct.name}`);
+        console.log(`Out of stock for ${orderedProduct.name}`);
       }
-
       else {
         product.quantity -= orderedProduct.quantity; 
 
@@ -91,6 +89,7 @@ let total = calculateOrderTotal(orders[0]);
    console.log(`Total for Rafael's order: $${total}`);
 
 
+
 // Task 5 - Creating a Function to Mark an Order as Completed
 
 function completeOrder (customerName) {
@@ -106,4 +105,21 @@ function completeOrder (customerName) {
         console(`No order found for ${customerName}`);
     }
 }
-completeOrder("Rafael");
+
+
+// Task 6 - Creating a Function to Check Pending Orders 
+
+let checkPendingOrders = function () {
+
+    let pendingOrders = orders.filter(order => order.status === "Pending");
+
+if (pendingOrders.length > 0) {
+    console.log(`There are ${pendingOrders.length} pending order(s).`);
+} else {
+    console.log("All orders have been completed.");
+}
+}
+// Calling the function to check for pending orders
+checkPendingOrders();
+
+
